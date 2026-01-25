@@ -247,8 +247,8 @@ Found a bug or have suggestions? Feel free to:
 
 For questions or collaboration:
 - 📧 Email: narendrakmr8267@gmail.com
-- 💼 LinkedIn: [your profile]
-- 🐙 GitHub: [@yourname]
+- 💼 LinkedIn: [www.linkedin.com/in/narendra-kumar8267](url)
+- 🐙 GitHub: [https://github.com/ShekharS007](url)
 
 ---
 
