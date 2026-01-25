@@ -8,14 +8,14 @@ A real-time machine learning application for predicting ethanol purity in distil
 
 ## 📋 Overview
 
-This app predicts ethanol purity in distillation columns using machine learning models (XGBoost/Random Forest) trained on real distillation data. It takes 7 core operating parameters and auto-calculates 14 derived features to predict product quality in real-time.
+This app predicts ethanol purity in distillation columns using machine learning models (XGBoost/Random Forest) trained on mathematically simulated distillation data. It takes 7 core operating parameters and auto-calculates 14 derived features to predict product quality.
 
 ### Key Features
 - ✅ Real-time purity prediction
 - ✅ 21 engineered features for accurate modeling
 - ✅ Input validation with warnings
 - ✅ Interactive UI with Streamlit
-- ✅ 92% accuracy (R² = 0.92)
+- ✅ >98% accuracy (R² > 0.98)
 - ✅ Fallback demo model included
 
 ---
@@ -37,47 +37,23 @@ xgboost
 ### Installation
 
 1. Clone the repository
-```bash
-git clone https://github.com/yourusername/ethanol-purity-predictor.git
-cd ethanol-purity-predictor
-```
 
 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
 
-3. Train your model in Colab (or use provided training script)
-
-4. Export model files to local folder:
-```python
-import pickle
-
-# Save model
-with open('model.pkl', 'wb') as f:
-    pickle.dump(best_model, f)
-
-# Save scaler
-with open('scaler.pkl', 'wb') as f:
-    pickle.dump(scaler, f)
-
-# Save feature names
-with open('features_names.pkl', 'wb') as f:
-    pickle.dump(X.columns.tolist(), f)
-```
-
-5. Place the 3 files in project folder:
+3. Train your model in Colab
+   
+4. Place the files in the project folder:
 ```
 project_folder/
-├── app_ethanol_final.py
+├── main.py
 ├── model.pkl
 ├── scaler.pkl
 └── features_names.pkl
 ```
 
-6. Run the app
+5. Run the app
 ```bash
-streamlit run app_ethanol_final.py
+streamlit run main.py
 ```
 
 Open browser to `http://localhost:8501`
@@ -106,28 +82,10 @@ Real-time prediction of ethanol purity (0.68 - 0.95 mole fraction) with confiden
 
 ---
 
-## 🎯 Best Operating Parameters (For Maximum Purity)
-
-To get highest ethanol purity (~0.92-0.95), use these parameters:
-
-| Parameter | Optimal Value | Range |
-|-----------|---------------|-------|
-| Pressure | 1.0 bar | 0.5-2.0 |
-| T1 | 78-80 °C | 70-85 |
-| L (Reflux) | 450-500 kmol/hr | 350-600 |
-| V (Vapor) | 350-380 kmol/hr | 300-450 |
-| D (Distillate) | 120-150 kmol/hr | 80-200 |
-| B (Bottoms) | 30-50 kmol/hr | 20-80 |
-| F (Feed) | 160-200 kmol/hr | 100-300 |
-
-**Pro Tip:** Higher reflux ratio (L/V > 1.3) gives better separation and higher purity.
-
----
-
 ## 📈 Model Performance
 
 - **Algorithm:** XGBoost / Random Forest
-- **R² Score:** 0.92 (explains 92% of variance)
+- **R² Score:** >0.98 (explains variance)
 - **RMSE:** 0.0155
 - **MAE:** 0.0122
 - **Accuracy:** ±1.55%
@@ -167,25 +125,19 @@ It's **not accurate**, but it shows the concept and prevents crashes.
 
 ### Real vs Demo Mode
 
-When you run the app:
-- ✅ **Green checkmark** = Using your actual trained model
-- ⚠️ **Warning icon** = Using demo model (files not found)
-
-So you always know which one is running.
-
 ---
 
 ## 📁 Project Structure
 
 ```
-ethanol-purity-predictor/
+Distillation-Column-Prediction-Streamlit/
 ├── README.md                    # This file
 ├── requirements.txt             # Dependencies
-├── app_ethanol_final.py         # Main Streamlit app
+├── main.py                      # Main Streamlit app
 ├── model.pkl                    # Your trained model
 ├── scaler.pkl                   # Feature scaler
 ├── features_names.pkl           # Feature names list
-├── training_colab_code.py       # Colab training script
+├── model_training_script.py     # Colab training script
 └── sample_data/
     └── dataset_distill.csv      # Example training data
 ```
@@ -206,7 +158,7 @@ To train your own model:
 
 3. Export the 3 files (model.pkl, scaler.pkl, features_names.pkl)
 
-See `training_colab_code.py` for full training pipeline.
+See `model_training_script.py` for the full training pipeline.
 
 ---
 
@@ -215,31 +167,13 @@ See `training_colab_code.py` for full training pipeline.
 ### For Best Results:
 1. Use **steady-state** operating data (not transient)
 2. Keep **mass balance** reasonable (D + B ≈ F)
-3. Ensure T1 sensor is **calibrated**
-4. Input parameters in **typical ranges**
-5. Cross-check predictions with **lab analysis** when possible
+3. Input parameters in **typical ranges**
 
 ### Typical Predictions:
 - **0.92-0.95:** Excellent separation (high reflux)
 - **0.85-0.90:** Normal operation (good conditions)
 - **0.75-0.85:** Acceptable (standard operation)
 - **<0.75:** Poor separation (increase reflux)
-
----
-
-## 🔧 Configuration
-
-You can adjust these in the code:
-
-```python
-# Input ranges (modify as needed for your column)
-Pressure:  0.5 - 3.0 bar
-T1:        30 - 120 °C
-Flows:     0 - 5000 kmol/hr
-
-# Temperature approximation
-temp_bottom = t1 - 5  # Approximate bottom temp (adjust if needed)
-```
 
 ---
 
@@ -250,28 +184,14 @@ The model was validated on:
 - Diverse operating conditions
 - Various feed compositions
 
-### Results:
-```
-Test R²:    0.92
-Test RMSE:  0.0155
-Test MAE:   0.0122
-CV Score:   0.91 ± 0.02
-```
-
 ---
 
 ## 🐛 Troubleshooting
 
 ### "Model files not found" error
 - Check files are named exactly: `model.pkl`, `scaler.pkl`, `features_names.pkl`
-- Put them in same folder as `app_ethanol_final.py`
+- Put them in the same folder
 - On Linux/Mac, filenames are case-sensitive
-
-### Predictions seem wrong
-- Verify input parameters are in typical ranges
-- Check mass balance (D + B should be close to F)
-- Ensure column is at steady state
-- Compare T1 reading with actual temperature
 
 ### App is slow
 - First load caches the model (normal)
@@ -309,7 +229,7 @@ This project is open source and available under the MIT License.
 
 **Narendra Kumar**
 - Chemical R&D Scientist
-- Expertise: ML in chemical manufacturing, process optimization
+- Expertise: AI/ML in the Chemical Industry, Process Optimization
 - Location: Maharashtra, India
 
 ---
@@ -326,7 +246,7 @@ Found a bug or have suggestions? Feel free to:
 ## 📞 Contact
 
 For questions or collaboration:
-- 📧 Email: [your email]
+- 📧 Email: narendrakmr8267@gmail.com
 - 💼 LinkedIn: [your profile]
 - 🐙 GitHub: [@yourname]
 
