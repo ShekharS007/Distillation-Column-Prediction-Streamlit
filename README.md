@@ -1,6 +1,6 @@
 # ⚗️ Ethanol Purity Predictor
 
-A real-time machine learning application for predicting ethanol purity in distillation columns. Built with Streamlit and trained on 2,500+ experimental datasets.
+A real-time machine learning application for predicting ethanol purity in distillation columns. Built with Streamlit and trained on 1,200+ experimental datasets.
 
 **Author:** Narendra Kumar
 
